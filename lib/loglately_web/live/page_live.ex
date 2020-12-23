@@ -1,39 +1,37 @@
 defmodule LogLatelyWeb.PageLive do
   use LogLatelyWeb, :live_view
+  alias LogLately.Users
+  alias LogLately.Logs
+  alias LogLately.Categories
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, query: "", results: %{})}
+    logs = Users.logs(1)
+    categories = Categories.all_for_user(1)
+    {:ok, assign(socket, logtext: "", logtitle: "", logs: logs, categories: categories)}
   end
 
   @impl true
-  def handle_event("suggest", %{"q" => query}, socket) do
-    {:noreply, assign(socket, results: search(query), query: query)}
+  def handle_event(
+        "addlog",
+        %{"logtext" => logtext, "categories" => category_id, "logtitle" => logtitle},
+        socket
+      ) do
+    {category_number, _} = Integer.parse(category_id)
+
+    Logs.create(%{
+      date: DateTime.utc_now(),
+      text: logtext,
+      title: logtitle,
+      user_id: 1,
+      category_id: category_number
+    })
+
+    {:noreply, socket |> assign(logtext: logtext) |> fetch()}
   end
 
-  @impl true
-  def handle_event("search", %{"q" => query}, socket) do
-    case search(query) do
-      %{^query => vsn} ->
-        {:noreply, redirect(socket, external: "https://hexdocs.pm/#{query}/#{vsn}")}
-
-      _ ->
-        {:noreply,
-         socket
-         |> put_flash(:error, "No dependencies found matching \"#{query}\"")
-         |> assign(results: %{}, query: query)}
-    end
-  end
-
-  defp search(query) do
-    if not LogLatelyWeb.Endpoint.config(:code_reloader) do
-      raise "action disabled when not in development"
-    end
-
-    for {app, desc, vsn} <- Application.started_applications(),
-        app = to_string(app),
-        String.starts_with?(app, query) and not List.starts_with?(desc, ~c"ERTS"),
-        into: %{},
-        do: {app, vsn}
+  defp fetch(socket) do
+    logs = Users.logs(1)
+    assign(socket, logs: logs, page_title: "Logs")
   end
 end

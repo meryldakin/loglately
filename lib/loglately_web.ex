@@ -24,6 +24,7 @@ defmodule LogLatelyWeb do
       import Plug.Conn
       import LogLatelyWeb.Gettext
       alias LogLatelyWeb.Router.Helpers, as: Routes
+      import Phoenix.LiveView.Controller
     end
   end
 

@@ -6,25 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <%= csrf_meta_tag() %>
     <%= live_title_tag assigns[:page_title] || "LogLately", suffix: " · Phoenix Framework" %>
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
   <body>
     <header>
-      <section class="container">
+      <div class="container">
+        <h1>LogLately</h1>
         <nav role="navigation">
-          <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
-            <% end %>
+          <ul class="nav nav-pills nav-stacked">
+            <li role="presentation"><%= link "Add log", to: Routes.live_dashboard_path(@conn, :home) %></li>
+            <li role="presentation"><%= link "List View", to: Routes.live_dashboard_path(@conn, :home) %></li>
+            <li role="presentation"><%= link "Calendar View", to: Routes.live_dashboard_path(@conn, :home) %></li>
           </ul>
         </nav>
-        <a href="https://phoenixframework.org/" class="phx-logo">
-          <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
-        </a>
-      </section>
+      </div>
     </header>
-    <%= @inner_content %>
+
+      <%= @inner_content %>
+
   </body>
 </html>

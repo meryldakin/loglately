@@ -18,6 +18,8 @@ defmodule LogLatelyWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
+    live "/logs", LogsLive.Index
+    live "/logs/:id", LogsLive.Show
   end
 
   # Other scopes may use custom stacks.

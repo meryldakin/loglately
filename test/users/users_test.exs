@@ -10,11 +10,9 @@ defmodule UsersTest do
     :ok
   end
 
-
   describe "#logs" do
     test "gets logs for a user" do
       user = insert(:user)
-      IO.inspect(user)
     end
   end
 end
