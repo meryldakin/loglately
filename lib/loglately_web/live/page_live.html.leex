@@ -36,7 +36,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-4" style="overflow:scroll; max-height:300px;">
+      <div class="col-4" style="overflow:scroll; overflow-x:hidden; max-height:300px;">
         <%= for log <- @logs do %>
             <div class="row">
             <%= live_redirect to: Routes.live_path(@socket, LogLatelyWeb.LogsLive.Show, log.id) do %>
@@ -45,7 +45,7 @@
             </div>
         <% end %>
       </div>
-      <div class="col-8" style="overflow:scroll; max-height:300px;">
+      <div class="col-8" style="overflow:scroll; overflow-x:hidden; max-height:300px;">
         <div>
           <%= for log <- @logs do %>
             <%= live_redirect to: Routes.live_path(@socket, LogLatelyWeb.LogsLive.Show, log.id) do %>
