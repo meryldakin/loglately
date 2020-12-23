@@ -3,7 +3,7 @@
 
   <form phx-submit="addlog">
     <div class="mb-3">
-      <textarea class="form-control" type="text" name="logtext" rows="4" value="<%= @logtext %>" placeholder="Start writing..."></textarea>
+      <textarea class="form-control" type="text" name="logtext" rows="4" value="<%= @logtext %>" placeholder="Start writing..." style="white-space: pre-wrap;"></textarea>
     </div>
     <div class="mb-3">
       <input class="form-control" type="text" name="logtitle" value="<%= @logtitle %>" placeholder="Summary Title (optional)"/>
@@ -46,7 +46,9 @@
       <div class="col-8" style="overflow:scroll; max-height:300px;">
         <div>
           <%= for log <- @logs do %>
-            <h4> <%= log.date.year %>/<%= log.date.month %>/<%= log.date.day %> <%= log.title %></h4>
+            <%= live_redirect to: Routes.live_path(@socket, LogLatelyWeb.LogsLive.Show, log.id) do %>
+              <h4 style="color:black;"><%= log.date.year %>/<%= log.date.month %>/<%= log.date.day %> <%= log.title %></h4>
+            <% end %>
             <p><%= log.text %>
             <hr>
           <% end %>
