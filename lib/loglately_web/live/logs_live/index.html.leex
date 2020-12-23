@@ -1,6 +1,9 @@
-<div>
+<div class="paper" style="margin-top: 50px;">
+<div class="mx-auto" style="width: 800px; background: white; padding-right: 8px; padding-left: 8px; white-space: pre-line;">
   <%= for log <- @logs do %>
-    <p><%= log.title %></p>
+    <h3><%= log.date.year %>/<%= log.date.month %>/<%= log.date.day %> <%= log.title %></h3>
     <p><%= log.text %>
+    <hr>
   <% end %>
+</div>
 </div>

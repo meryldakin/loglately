@@ -19,7 +19,7 @@ defmodule LogLately.User do
   def get_logs(user_id) do
     from(l in Log,
       where: l.user_id == ^user_id,
-      order_by: l.date
+      order_by: [desc: l.date]
     )
   end
 
